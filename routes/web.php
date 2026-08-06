@@ -11,7 +11,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\PaymentController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 // TAX ROUTES
