@@ -1,0 +1,494 @@
+================================================================================
+        RAILWAY DEPLOYMENT - STEP BY STEP GUIDE
+        DeaSirnicko Laravel Application
+================================================================================
+
+TOTAL TIME: 10-15 MINUTES
+DATABASE: MySQL (Your Current Setup)
+
+================================================================================
+PART 1: PREPARATION (5 MINUTES)
+================================================================================
+
+STEP 1: Generate APP_KEY
+------------------------
+Open Command Prompt or PowerShell in your project folder:
+
+    cd c:\laragon\www\Dea'sproject\DeaSirnicko
+    php artisan key:generate --show
+
+COPY THE OUTPUT! You'll need it later.
+Example output: base64:abcdefghijklmnopqrstuvwxyz1234567890ABCD==
+
+SAVE IT HERE: _________________________________
+
+
+STEP 2: Install Dependencies (if not done)
+-----------------------------------------
+    composer install
+    npm install
+
+
+STEP 3: Build Assets
+-------------------
+    npm run build
+
+Wait for it to complete. Should see "built in XXms" message.
+
+
+STEP 4: Initialize Git (if not done)
+-----------------------------------
+    git init
+    git add .
+    git commit -m "Ready for Railway deployment"
+
+
+STEP 5: Create GitHub Repository
+-------------------------------
+1. Go to: https://github.com/new
+2. Repository name: deasirnicko (or your choice)
+3. Keep it Public or Private (your choice)
+4. DON'T check "Initialize with README"
+5. Click "Create repository"
+
+COPY YOUR REPO URL: _________________________________
+Example: https://github.com/YOUR_USERNAME/deasirnicko.git
+
+
+STEP 6: Push to GitHub
+---------------------
+Replace YOUR_GITHUB_URL with your actual URL from Step 5:
+
+    git remote add origin YOUR_GITHUB_URL
+    git branch -M main
+    git push -u origin main
+
+Enter your GitHub username and password/token when prompted.
+
+================================================================================
+PART 2: RAILWAY SETUP (5 MINUTES)
+================================================================================
+
+STEP 7: Create Railway Account
+-----------------------------
+1. Go to: https://railway.app
+2. Click "Login" (top right)
+3. Choose "Login with GitHub" (easiest)
+4. Authorize Railway to access GitHub
+5. You'll see Railway Dashboard
+
+
+STEP 8: Create New Project
+-------------------------
+1. Click "New Project" (big button)
+2. Select "Deploy from GitHub repo"
+3. Choose your repository: deasirnicko
+4. Railway starts building automatically
+5. Wait 3-5 minutes for first build
+
+
+STEP 9: Add MySQL Database
+-------------------------
+1. In your project dashboard, click "+ New" button
+2. Select "Database"
+3. Choose "MySQL"
+4. Wait 30 seconds for provisioning
+5. MySQL service appears in your project
+
+YOUR MYSQL IS NOW READY!
+
+
+STEP 10: Configure Environment Variables
+---------------------------------------
+1. Click on your APPLICATION service (not MySQL)
+2. Click "Variables" tab
+3. Click "+ New Variable" button
+
+ADD THESE VARIABLES ONE BY ONE:
+
+Variable 1:
+    Name: APP_KEY
+    Value: [Paste the key from STEP 1]
+
+Variable 2:
+    Name: APP_ENV
+    Value: production
+
+Variable 3:
+    Name: APP_DEBUG
+    Value: false
+
+Variable 4:
+    Name: DB_CONNECTION
+    Value: mysql
+
+4. Click outside or press Enter to save each one
+5. Railway will restart your service automatically
+
+================================================================================
+PART 3: DEPLOYMENT (3 MINUTES)
+================================================================================
+
+STEP 11: Install Railway CLI
+---------------------------
+Open PowerShell as Administrator:
+
+    npm install -g @railway/cli
+
+Wait for installation to complete.
+
+
+STEP 12: Login to Railway
+------------------------
+    railway login
+
+This opens your browser. Click "Confirm" to authenticate.
+
+
+STEP 13: Link Your Project
+-------------------------
+    cd c:\laragon\www\Dea'sproject\DeaSirnicko
+    railway link
+
+Choose your project from the list using arrow keys, press Enter.
+
+
+STEP 14: Run Database Migrations
+-------------------------------
+    railway run php artisan migrate --force
+
+Type "yes" when prompted.
+Wait for migrations to complete.
+
+
+STEP 15: (Optional) Seed Initial Data
+------------------------------------
+If you have seeders:
+
+    railway run php artisan db:seed --force
+
+================================================================================
+PART 4: VERIFICATION (2 MINUTES)
+================================================================================
+
+STEP 16: Get Your App URL
+------------------------
+1. Go to Railway Dashboard
+2. Click on your application service
+3. Click "Settings" tab
+4. Scroll to "Domains" section
+5. You'll see: your-app-name.up.railway.app
+
+COPY YOUR URL: _________________________________
+
+
+STEP 17: Test Your App
+---------------------
+Open browser and visit:
+
+    https://your-app-name.up.railway.app
+
+You should see your Laravel welcome page!
+
+
+STEP 18: Test Health Check
+-------------------------
+Visit:
+
+    https://your-app-name.up.railway.app/up
+
+Should display: OK
+
+
+STEP 19: Test Registration
+-------------------------
+1. Go to: https://your-app-name.up.railway.app/register
+2. Create a test account
+3. Try logging in
+4. Verify everything works
+
+
+STEP 20: Check Logs (If Issues)
+------------------------------
+If something doesn't work:
+
+    railway logs --follow
+
+Press Ctrl+C to stop viewing logs.
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+PROBLEM 1: "Vite manifest not found"
+-----------------------------------
+SOLUTION:
+    1. Run locally: npm run build
+    2. Commit: git add . && git commit -m "Fix build"
+    3. Push: git push
+
+
+PROBLEM 2: "500 Internal Server Error"
+-------------------------------------
+SOLUTION:
+    railway run php artisan config:clear
+    railway run php artisan config:cache
+    railway logs
+
+
+PROBLEM 3: "Database connection failed"
+--------------------------------------
+SOLUTION:
+    1. Check DB_CONNECTION=mysql is set in Railway variables
+    2. Check MySQL service is running (green in dashboard)
+    3. railway run php artisan tinker
+    4. Run: DB::connection()->getPdo();
+
+
+PROBLEM 4: "APP_KEY not set"
+---------------------------
+SOLUTION:
+    1. Generate: php artisan key:generate --show
+    2. Copy the output
+    3. Add to Railway variables: APP_KEY = [paste]
+
+
+PROBLEM 5: Changes not showing
+-----------------------------
+SOLUTION:
+    1. Make changes locally
+    2. git add .
+    3. git commit -m "Update"
+    4. git push
+    5. Railway auto-deploys
+
+================================================================================
+USEFUL COMMANDS
+================================================================================
+
+View logs:
+    railway logs
+    railway logs --follow
+
+Run artisan commands:
+    railway run php artisan [command]
+
+List environment variables:
+    railway variables
+
+Check status:
+    railway status
+
+Access database:
+    railway run php artisan tinker
+    Then: DB::table('users')->count();
+
+Clear caches:
+    railway run php artisan optimize:clear
+
+Redeploy:
+    railway up
+
+================================================================================
+POST-DEPLOYMENT TASKS
+================================================================================
+
+[ ] Configure email (SMTP settings in Railway variables)
+[ ] Set up custom domain (Railway Settings -> Domains)
+[ ] Configure file storage (consider S3 for production)
+[ ] Set up monitoring (check Railway metrics)
+[ ] Add Redis (optional, for better performance)
+[ ] Configure backups (Railway Pro feature)
+[ ] Test all features thoroughly
+[ ] Update documentation with production URL
+
+================================================================================
+ENVIRONMENT VARIABLES REFERENCE
+================================================================================
+
+REQUIRED (Set manually in Railway):
+    APP_KEY=base64:your_generated_key
+    APP_ENV=production
+    APP_DEBUG=false
+    DB_CONNECTION=mysql
+
+AUTO-GENERATED (Railway MySQL creates these):
+    MYSQLHOST=containers-us-west-xxx.railway.app
+    MYSQLPORT=3306
+    MYSQLDATABASE=railway
+    MYSQLUSER=root
+    MYSQLPASSWORD=xxxxxxxxxxxxx
+
+OPTIONAL (Add later if needed):
+    MAIL_MAILER=smtp
+    MAIL_HOST=smtp.mailtrap.io
+    MAIL_PORT=2525
+    MAIL_USERNAME=
+    MAIL_PASSWORD=
+    MAIL_FROM_ADDRESS=noreply@yourdomain.com
+
+================================================================================
+COSTS
+================================================================================
+
+Railway Free Tier:
+    - $5 credit per month
+    - Perfect for testing
+    - May sleep after inactivity
+
+Expected Monthly Cost (Small App):
+    - Application: $5-10
+    - MySQL Database: $5-10
+    - Total: $10-20/month
+
+Railway Pro:
+    - $20/month subscription
+    - No sleep
+    - Better resources
+    - Automatic backups
+
+================================================================================
+IMPORTANT FILES CREATED
+================================================================================
+
+Documentation:
+    START_HERE.md               - Entry point
+    QUICK_START.md              - 5-minute guide
+    RAILWAY_SETUP.md            - Complete guide
+    MYSQL_SETUP.md              - MySQL specific
+    DEPLOYMENT.md               - Detailed reference
+    DEPLOY_STEPS.txt            - This file
+
+Configuration:
+    Dockerfile                  - Container image
+    docker/                     - Server configs
+    railway.toml                - Railway config
+    .env.production             - Environment template
+
+Scripts:
+    deploy.ps1                  - Automated deployment (Windows)
+    deploy.sh                   - Automated deployment (Mac/Linux)
+    test-docker.ps1             - Test Docker build
+
+================================================================================
+ALTERNATIVE: AUTOMATED DEPLOYMENT
+================================================================================
+
+Instead of manual steps above, use the automated script:
+
+Windows (PowerShell):
+    .\deploy.ps1
+
+Mac/Linux:
+    chmod +x deploy.sh
+    ./deploy.sh
+
+The script does Steps 11-14 automatically!
+
+================================================================================
+SUPPORT
+================================================================================
+
+Documentation:
+    - Check other .md files in your project
+    - README.md - Project overview
+    - DOCUMENTATION_INDEX.md - Find anything
+
+Railway:
+    - Docs: https://docs.railway.app
+    - Discord: https://discord.gg/railway
+    - Status: https://status.railway.app
+
+Laravel:
+    - Docs: https://laravel.com/docs
+    - Discord: https://discord.gg/laravel
+
+Commands:
+    railway logs --follow       - View live logs
+    railway status              - Check services
+    railway variables           - List variables
+    railway shell               - SSH into container
+
+================================================================================
+CHECKLIST
+================================================================================
+
+BEFORE DEPLOYMENT:
+[ ] PHP 8.2+ installed
+[ ] Composer installed
+[ ] Node.js installed
+[ ] Git installed
+[ ] Dependencies installed (composer install, npm install)
+[ ] Assets built (npm run build)
+[ ] GitHub account created
+[ ] Railway account created
+
+DURING DEPLOYMENT:
+[ ] APP_KEY generated and saved
+[ ] GitHub repository created
+[ ] Code pushed to GitHub
+[ ] Railway project created
+[ ] MySQL database added
+[ ] Environment variables set (APP_KEY, APP_ENV, APP_DEBUG, DB_CONNECTION)
+[ ] Railway CLI installed
+[ ] Project linked with Railway CLI
+[ ] Migrations ran successfully
+
+AFTER DEPLOYMENT:
+[ ] App accessible at Railway URL
+[ ] Health check works (/up endpoint)
+[ ] Registration works
+[ ] Login works
+[ ] Database connected
+[ ] All features tested
+[ ] No errors in logs
+
+================================================================================
+QUICK REFERENCE
+================================================================================
+
+Your Project Location:
+    c:\laragon\www\Dea'sproject\DeaSirnicko
+
+Your Database Name (Local):
+    deadelaroca
+
+Railway Dashboard:
+    https://railway.app/dashboard
+
+GitHub:
+    https://github.com
+
+Your GitHub Repo:
+    https://github.com/YOUR_USERNAME/deasirnicko
+
+Your Railway App URL (After Deployment):
+    https://your-app-name.up.railway.app
+
+Health Check URL:
+    https://your-app-name.up.railway.app/up
+
+================================================================================
+COMPLETION
+================================================================================
+
+After completing all steps:
+
+1. Your app is live at: https://your-app-name.up.railway.app
+2. Database is running: MySQL on Railway
+3. Auto-deploy is enabled: Push to GitHub = Auto deploy
+4. You can monitor: Railway Dashboard
+5. You can view logs: railway logs
+
+CONGRATULATIONS! YOUR APP IS DEPLOYED! 🎉
+
+================================================================================
+
+Need detailed explanations? Check:
+    - RAILWAY_SETUP.md (complete walkthrough)
+    - MYSQL_SETUP.md (MySQL specific)
+    - DEPLOYMENT.md (detailed reference)
+
+Questions? Check DOCUMENTATION_INDEX.md to find relevant guide.
+
+================================================================================

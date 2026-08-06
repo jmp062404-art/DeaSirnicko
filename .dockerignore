@@ -1,0 +1,50 @@
+# Dependencies
+/node_modules
+/vendor
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# IDE
+/.idea
+/.vscode
+/.fleet
+/.nova
+/.zed
+
+# Git
+/.git
+/.gitignore
+/.gitattributes
+
+# Build artifacts
+/public/build
+/public/hot
+/public/storage
+
+# Storage
+/storage/*.key
+/storage/pail
+/storage/logs/*
+
+# Cache
+/.phpunit.cache
+.phpunit.result.cache
+
+# OS
+.DS_Store
+Thumbs.db
+*.log
+
+# Laravel
+/bootstrap/cache/*
+!bootstrap/cache/.gitignore
+
+# Testing
+/coverage
+/tests
+
+# Other
+README.md

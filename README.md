@@ -1,61 +1,249 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# DeaSirnicko - Laravel Application
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modern Laravel 12 application built with Breeze authentication, Vite, and TailwindCSS.
 
-## About Laravel
+## 🚀 Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Laravel 12** - Latest Laravel framework
+- **PHP 8.3** - Modern PHP version
+- **Vite 7** - Lightning-fast asset bundling
+- **TailwindCSS 3** - Utility-first CSS framework
+- **Alpine.js** - Lightweight JavaScript framework
+- **Laravel Breeze** - Authentication scaffolding
+- **Queue System** - Database-driven background jobs
+- **File Management** - Upload and manage files
+- **Multi-College Support** - Organizational structure
+- **Job Orders** - Work order management
+- **Permits & Payments** - Transaction handling
+- **Reports** - Data visualization and reporting
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📋 Requirements
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP 8.2 or higher
+- Composer
+- Node.js 18+ and npm
+- MySQL 8.0+ or PostgreSQL 14+
+- Git
 
-## Learning Laravel
+## 🛠️ Local Development Setup
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1. Clone the Repository
+```bash
+git clone <your-repo-url>
+cd DeaSirnicko
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 2. Install Dependencies
+```bash
+composer install
+npm install
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 3. Environment Configuration
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## Laravel Sponsors
+### 4. Database Setup
+Configure your `.env` file:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=deadelaroca
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 5. Run Migrations
+```bash
+php artisan migrate
+```
 
-### Premium Partners
+### 6. Build Assets
+```bash
+npm run build
+# or for development with hot reload
+npm run dev
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 7. Start Development Server
+```bash
+php artisan serve
+```
 
-## Contributing
+Visit: http://localhost:8000
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🚢 Railway Deployment
 
-## Code of Conduct
+This project is optimized for Railway deployment with Docker.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Quick Deploy
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new)
 
-## Security Vulnerabilities
+### Manual Deployment
+See detailed instructions in [DEPLOYMENT.md](DEPLOYMENT.md)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**Quick steps:**
+1. Push code to GitHub
+2. Connect to Railway
+3. Add MySQL/PostgreSQL database
+4. Set environment variables
+5. Deploy!
 
-## License
+## 📁 Project Structure
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+DeaSirnicko/
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Auth/          # Authentication controllers
+│   │   │   ├── CollegeController.php
+│   │   │   ├── FileController.php
+│   │   │   ├── ItemController.php
+│   │   │   ├── JobOrderController.php
+│   │   │   ├── PaymentController.php
+│   │   │   ├── PermitController.php
+│   │   │   └── ReportController.php
+│   │   └── Middleware/
+│   │       └── RoleMiddleware.php
+│   ├── Models/
+│   │   ├── College.php
+│   │   ├── File.php
+│   │   ├── Item.php
+│   │   ├── JobOrder.php
+│   │   ├── Payment.php
+│   │   ├── Permit.php
+│   │   └── User.php
+│   └── View/
+│       └── Components/
+├── database/
+│   ├── factories/
+│   ├── migrations/
+│   └── seeders/
+├── resources/
+│   ├── css/
+│   ├── js/
+│   └── views/
+├── routes/
+│   ├── api.php
+│   ├── auth.php
+│   └── web.php
+├── docker/                    # Docker configuration
+│   ├── default.conf          # Nginx config
+│   ├── nginx.conf
+│   └── supervisord.conf
+├── Dockerfile                # Production Docker image
+├── railway.toml              # Railway configuration
+└── DEPLOYMENT.md             # Deployment guide
+```
+
+## 🔧 Development Commands
+
+### Running Tests
+```bash
+php artisan test
+```
+
+### Code Style
+```bash
+./vendor/bin/pint
+```
+
+### Clear Cache
+```bash
+php artisan optimize:clear
+```
+
+### Queue Worker
+```bash
+php artisan queue:work
+```
+
+### Database Seeding
+```bash
+php artisan db:seed
+```
+
+## 🌐 API Routes
+
+- `/api/colleges` - College management
+- `/api/items` - Inventory items
+- `/api/job-orders` - Work orders
+- `/api/payments` - Payment processing
+- `/api/permits` - Permit management
+- `/api/reports` - Data reports
+
+## 👥 User Roles
+
+The application includes role-based access control:
+- **Admin** - Full system access
+- **Staff** - Department operations
+- **User** - Limited access
+
+## 🔒 Security
+
+- Laravel Breeze authentication
+- CSRF protection
+- SQL injection prevention
+- XSS protection
+- Password hashing with bcrypt
+- Rate limiting
+- Secure headers
+
+## 📝 Environment Variables
+
+Key environment variables:
+
+```env
+APP_NAME=DeaSirnicko
+APP_ENV=production
+APP_KEY=                    # Generate with: php artisan key:generate
+APP_DEBUG=false
+APP_URL=https://your-domain.com
+
+DB_CONNECTION=mysql
+DB_HOST=your-db-host
+DB_PORT=3306
+DB_DATABASE=your-database
+DB_USERNAME=your-username
+DB_PASSWORD=your-password
+
+MAIL_MAILER=smtp
+MAIL_HOST=your-smtp-host
+MAIL_PORT=587
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is open-sourced software licensed under the [MIT license](LICENSE).
+
+## 🆘 Support
+
+For issues and questions:
+- Create an issue in the repository
+- Check [DEPLOYMENT.md](DEPLOYMENT.md) for deployment help
+- Review Laravel documentation: https://laravel.com/docs
+
+## 🎯 Roadmap
+
+- [ ] Enhanced reporting dashboard
+- [ ] PDF export functionality
+- [ ] Email notifications
+- [ ] API documentation
+- [ ] Mobile-responsive improvements
+- [ ] Real-time notifications with WebSockets
+
+---
+
+**Built with ❤️ using Laravel 12**
