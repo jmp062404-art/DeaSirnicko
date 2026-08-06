@@ -1,0 +1,146 @@
+================================================================================
+        🔄 ENABLE AUTO-DEPLOY ON RAILWAY
+================================================================================
+
+PROBLEM: Pushes to GitHub not triggering automatic deployment
+
+SOLUTION: Enable GitHub auto-deploy in Railway settings
+
+================================================================================
+STEP 1: Go to Railway Project Settings
+================================================================================
+
+1. Open Railway Dashboard: https://railway.app/dashboard
+2. Click on your project: "amiable-serenity"
+3. Click on "DeaSirnicko" service
+4. Click "Settings" tab (top navigation)
+
+================================================================================
+STEP 2: Check/Enable GitHub Integration
+================================================================================
+
+Scroll down to find:
+
+"Source" or "GitHub" section
+
+You should see:
+✅ Repository: jmp062404-art/DeaSirnicko
+✅ Branch: main
+
+If not connected:
+1. Click "Connect Repo" or "Change Source"
+2. Select your GitHub repository
+3. Select "main" branch
+
+================================================================================
+STEP 3: Enable Auto-Deploy
+================================================================================
+
+Look for these settings:
+
+[ ] Auto-deploy on push
+    ↑ Make sure this is CHECKED/ENABLED
+
+If it's disabled:
+1. Check the box
+2. Save settings
+
+================================================================================
+STEP 4: Trigger Manual Deploy (For Now)
+================================================================================
+
+If auto-deploy isn't working yet, trigger manually:
+
+Click the "..." menu (3 dots) on your service
+Select "Redeploy"
+
+Or click "Deployments" tab → Click "Deploy" button
+
+================================================================================
+STEP 5: Verify Auto-Deploy is Working
+================================================================================
+
+Test it:
+
+1. Make a small change (any file)
+   Example: Edit README.md
+
+2. Commit and push:
+   git add README.md
+   git commit -m "Test auto-deploy"
+   git push
+
+3. Check Railway Dashboard
+   Should see new deployment starting automatically
+
+================================================================================
+ALTERNATIVE: Manual Deploy via Railway CLI
+================================================================================
+
+If you need to deploy NOW without waiting:
+
+railway up
+
+This manually triggers deployment from your local code.
+
+================================================================================
+CHECK GITHUB WEBHOOK
+================================================================================
+
+Railway uses GitHub webhooks. Check if it's configured:
+
+1. Go to GitHub repo: https://github.com/jmp062404-art/DeaSirnicko
+2. Click "Settings" tab
+3. Click "Webhooks" (left sidebar)
+4. Should see Railway webhook: https://backboard.railway.app/...
+5. Status should be: ✅ (green checkmark)
+
+If webhook is missing or has ❌ red X:
+- Reconnect repository in Railway settings
+
+================================================================================
+COMMON ISSUES
+================================================================================
+
+Issue 1: "Deploy on push" is disabled
+Solution: Enable it in Railway Settings → Source section
+
+Issue 2: Wrong branch selected
+Solution: Change to "main" branch in Railway settings
+
+Issue 3: GitHub webhook not configured
+Solution: Reconnect GitHub repo in Railway
+
+Issue 4: Railway needs re-authentication
+Solution: 
+  1. Railway Settings → Disconnect GitHub
+  2. Reconnect GitHub
+  3. Re-select repository
+
+================================================================================
+QUICK FIX: Manual Deploy NOW
+================================================================================
+
+Don't want to wait? Deploy manually:
+
+Option 1: Railway Dashboard
+- Go to "Deployments" tab
+- Click "Deploy" button
+
+Option 2: Railway CLI
+cd c:\laragon\www\Dea'sproject\DeaSirnicko
+railway up
+
+================================================================================
+VERIFY DEPLOYMENT SETTINGS
+================================================================================
+
+In Railway Settings, should see:
+
+✅ Source: GitHub
+✅ Repository: jmp062404-art/DeaSirnicko  
+✅ Branch: main
+✅ Auto-deploy: Enabled
+✅ Root Directory: /
+
+================================================================================
