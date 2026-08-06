@@ -7,6 +7,7 @@ RUN apk add --no-cache \
     supervisor \
     mysql-client \
     postgresql-client \
+    postgresql-dev \
     nodejs \
     npm \
     zip \
@@ -79,9 +80,14 @@ COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # Create log directories
 RUN mkdir -p /var/log/php-fpm /var/log/supervisor
 
-# Copy startup script
-COPY docker/startup.sh /usr/local/bin/startup.sh
-RUN chmod +x /usr/local/bin/startup.sh
+# Create startup script inline (avoid Windows line ending issues)
+RUN echo '#!/bin/sh' > /usr/local/bin/startup.sh && \
+    echo 'echo "Running migrations and seeding database ..."' >> /usr/local/bin/startup.sh && \
+    echo 'php artisan migrate --force' >> /usr/local/bin/startup.sh && \
+    echo 'php artisan db:seed --force' >> /usr/local/bin/startup.sh && \
+    echo 'echo "Starting supervisord..."' >> /usr/local/bin/startup.sh && \
+    echo 'exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf' >> /usr/local/bin/startup.sh && \
+    chmod +x /usr/local/bin/startup.sh
 
 # Expose port
 EXPOSE 8080
