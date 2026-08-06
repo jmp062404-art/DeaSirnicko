@@ -79,6 +79,10 @@ COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # Create log directories
 RUN mkdir -p /var/log/php-fpm /var/log/supervisor
 
+# Copy startup script
+COPY docker/startup.sh /usr/local/bin/startup.sh
+RUN chmod +x /usr/local/bin/startup.sh
+
 # Expose port
 EXPOSE 8080
 
@@ -86,5 +90,5 @@ EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
     CMD curl -f http://localhost:8080/up || exit 1
 
-# Start supervisord
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+# Start with startup script (runs migrations and seeds, then starts supervisord)
+CMD ["/usr/local/bin/startup.sh"]

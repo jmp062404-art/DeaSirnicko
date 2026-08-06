@@ -1,0 +1,78 @@
+================================================================================
+        🌱 RUN DATABASE SEEDER ON RAILWAY
+================================================================================
+
+PROBLEM: Users table is EMPTY - seeder not run yet!
+
+SOLUTION: Run the seeder command on Railway
+
+================================================================================
+STEP 1: Open PowerShell in your project folder
+================================================================================
+
+cd c:\laragon\www\Dea'sproject\DeaSirnicko
+
+================================================================================
+STEP 2: Run the seeder on Railway
+================================================================================
+
+railway run php artisan db:seed --force
+
+This will create:
+✅ Admin: deadelaroca@gmail.com / password: 123456
+✅ User1: user@deadela.com / password: password
+✅ User2: jane@deadela.com / password: password
+
+Plus any other seeders (Categories, Items, Products)
+
+================================================================================
+STEP 3: Verify users were created
+================================================================================
+
+After seeding, check the users table in Railway MySQL dashboard
+or run:
+
+railway run php artisan tinker
+
+Then type:
+\App\Models\User::all()
+
+You should see 3 users!
+
+================================================================================
+ALTERNATIVE: If db:seed doesn't work
+================================================================================
+
+Run UserSeeder specifically:
+
+railway run php artisan db:seed --class=UserSeeder --force
+
+================================================================================
+CHECK IF MIGRATIONS RAN
+================================================================================
+
+First, verify migrations completed:
+
+railway run php artisan migrate:status
+
+Should show all migrations as "Ran"
+
+If not, run:
+
+railway run php artisan migrate --force
+
+THEN run the seeder.
+
+================================================================================
+QUICK TEST AFTER SEEDING
+================================================================================
+
+1. Go to: https://bongabongrevenue.up.railway.app/login
+
+2. Login with:
+   Email: deadelaroca@gmail.com
+   Password: 123456
+
+3. Should work! ✅
+
+================================================================================
